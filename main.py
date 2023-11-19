@@ -1,3 +1,3 @@
 from Main import Main
 
-x=Main("apague de tab1")
+x=Main("atualize tab2 configure nome = kaka, idade = 2, sobrenome = py onde nome = KAKA e sobrenome = ")

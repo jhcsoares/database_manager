@@ -112,12 +112,11 @@ class UpdateParser(ParserInterface):
         while not stop:
             update_value=self._cmd_list[update_value_index]
 
-            update_values.append(update_value[0:len(update_value)-1])
+            if "," in update_value:
+                update_values.append(update_value[0:len(update_value)-1])
+                update_value_index+=3
 
-            update_value_index+=3
-
-            if self._cmd_list[update_value_index+1]=="ONDE":
-                update_value=self._cmd_list[update_value_index]
+            else:
                 update_values.append(update_value)
                 stop=True
 

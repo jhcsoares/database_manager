@@ -5,6 +5,7 @@ from parser.InsertParser import InsertParser
 from parser.UpdateParser import UpdateParser
 
 from table_handler.TableHandlerInsert import TableHandlerInsert
+from table_handler.TableHandlerUpdate import TableHandlerUpdate
 from table_handler.TableHandlerDelete import TableHandlerDelete
 
 class Main:
@@ -23,6 +24,8 @@ class Main:
         elif self.__cmd_list[0]=="ATUALIZE":
             update_parser=UpdateParser(self.__cmd_list)
             parsed_cmd_list=update_parser._execute()
+
+            TableHandlerUpdate(parsed_cmd_list)
         
         elif self.__cmd_list[0]=="APAGUE":
             delete_parser=DeleteParser(self.__cmd_list)
