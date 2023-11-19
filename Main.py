@@ -4,7 +4,8 @@ from parser.DeleteParser import DeleteParser
 from parser.InsertParser import InsertParser
 from parser.UpdateParser import UpdateParser
 
-from table_handler.TableHandler import TableHandler
+from table_handler.TableHandlerInsert import TableHandlerInsert
+from table_handler.TableHandlerDelete import TableHandlerDelete
 
 class Main:
     def __init__(self, command: str) -> None:
@@ -17,7 +18,7 @@ class Main:
             insert_parser=InsertParser(self.__cmd_list)
             parsed_cmd_list=insert_parser._execute()
 
-            table_handler=TableHandler(parsed_cmd_list)
+            TableHandlerInsert(parsed_cmd_list)
         
         elif self.__cmd_list[0]=="ATUALIZE":
             update_parser=UpdateParser(self.__cmd_list)
@@ -26,6 +27,8 @@ class Main:
         elif self.__cmd_list[0]=="APAGUE":
             delete_parser=DeleteParser(self.__cmd_list)
             parsed_cmd_list=delete_parser._execute()
+
+            TableHandlerDelete(parsed_cmd_list)
 
         else:
             raise Exception("Comando principal não encontrado!")
