@@ -11,6 +11,31 @@ class TableHandlerUpdate(TableHandlerInterface):
         super().__init__(cmd_list)
     
     def _execute(self) -> None:
+        if not self._columns:
+            self.__update_all_registers()
+        
+        else:
+            self.__update_register()
+    
+    def __update_all_registers(self):   
+        with open(self._abs_table_path, "r", newline="") as file:
+            csv_reader=csv.DictReader(file)
+            headers=csv_reader.fieldnames
+
+            save_registers=[]
+
+            for register in csv_reader:
+                for index, update_column in enumerate(self.__update_columns):
+                    register[update_column]=self.__update_values[index]
+                
+                save_registers.append(register)
+            
+        with open(self._abs_table_path, "w") as file:
+            csv_writer=csv.DictWriter(file, fieldnames=headers)
+            csv_writer.writeheader()
+            csv_writer.writerows(save_registers)
+
+    def __update_register(self) -> None:
         with open(self._abs_table_path, "r", newline="") as file:
             csv_reader=csv.DictReader(file)
             headers=csv_reader.fieldnames
@@ -49,16 +74,11 @@ class TableHandlerUpdate(TableHandlerInterface):
                     else:
                         final_condition=condition
 
-                column_value_update_dict={}
-
                 if final_condition==True:
-                    for i in range(0, len(self.__update_columns)):
-                        column=self.__update_columns[i]
-                        value=self.__update_values[i]
-
-                        column_value_update_dict[column]=value
+                    for index, update_column in enumerate(self.__update_columns):
+                        register[update_column]=self.__update_values[index]
                     
-                    save_registers.append(column_value_update_dict)
+                    save_registers.append(register)
                 
                 else:
                     save_registers.append(register)
