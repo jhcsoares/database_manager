@@ -4,7 +4,7 @@ from typing import List
 from table_handler.TableHandlerInterface import TableHandlerInterface
 
 class TableHandlerUpdate(TableHandlerInterface):
-    def __init__(self, cmd_list: List[str]):
+    def __init__(self, cmd_list: List[str]) -> None:
         self.__update_columns=cmd_list[5]
         self.__update_values=cmd_list[6]
 
@@ -17,7 +17,7 @@ class TableHandlerUpdate(TableHandlerInterface):
         else:
             self.__update_register()
     
-    def __update_all_registers(self):   
+    def __update_all_registers(self) -> None:   
         with open(self._abs_table_path, "r", newline="") as file:
             csv_reader=csv.DictReader(file)
             headers=csv_reader.fieldnames

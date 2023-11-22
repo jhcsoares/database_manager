@@ -6,7 +6,7 @@ from typing import List
 from table_handler.TableHandlerInterface import TableHandlerInterface
 
 class TableHandlerDelete(TableHandlerInterface):
-    def __init__(self, cmd_list: List[str]):
+    def __init__(self, cmd_list: List[str]) -> None:
         super().__init__(cmd_list)
     
     def _execute(self) -> None:

@@ -3,6 +3,7 @@ from typing import List
 from parser.DeleteParser import DeleteParser
 from parser.InsertParser import InsertParser
 from parser.UpdateParser import UpdateParser
+from parser.SelectParser import SelectParser
 
 from table_handler.TableHandlerInsert import TableHandlerInsert
 from table_handler.TableHandlerUpdate import TableHandlerUpdate
@@ -32,6 +33,12 @@ class Main:
             parsed_cmd_list=delete_parser._execute()
 
             TableHandlerDelete(parsed_cmd_list)
+        
+        elif self.__cmd_list[0]=="SELECIONE":
+            select_parser=SelectParser(self.__cmd_list)
+            parsed_cmd_list=select_parser._execute()
+
+            #####
 
         else:
             raise Exception("Comando principal não encontrado!")

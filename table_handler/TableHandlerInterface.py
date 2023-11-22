@@ -6,7 +6,7 @@ from abc import ABC, abstractmethod
 from typing import List
 
 class TableHandlerInterface(ABC):
-    def __init__(self, cmd_list: List[str]):
+    def __init__(self, cmd_list: List[str]) -> None:
         self._cmd_list=cmd_list
         
         self._table=self._cmd_list[0][0]
@@ -21,7 +21,7 @@ class TableHandlerInterface(ABC):
         self._execute()
     
     @abstractmethod
-    def _validate(self):
+    def _validate(self) -> None:
         pass
 
     def _table_exists(self) -> bool:
@@ -30,7 +30,7 @@ class TableHandlerInterface(ABC):
         self._abs_table_path=absolute_path
         return os.path.isfile(absolute_path)
     
-    def _validate(self):
+    def _validate(self) -> None:
         if not self._table_exists():
             raise Exception(f"Tabela {self._table} não existente!")
         
