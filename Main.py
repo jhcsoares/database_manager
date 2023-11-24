@@ -8,6 +8,7 @@ from parser.SelectParser import SelectParser
 from table_handler.TableHandlerInsert import TableHandlerInsert
 from table_handler.TableHandlerUpdate import TableHandlerUpdate
 from table_handler.TableHandlerDelete import TableHandlerDelete
+from table_handler.TableHandlerSelect import TableHandlerSelect
 
 class Main:
     def __init__(self, command: str) -> None:
@@ -38,7 +39,7 @@ class Main:
             select_parser=SelectParser(self.__cmd_list)
             parsed_cmd_list=select_parser._execute()
 
-            #####
+            TableHandlerSelect(parsed_cmd_list)
 
         else:
             raise Exception("Comando principal não encontrado!")

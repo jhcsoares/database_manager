@@ -16,7 +16,7 @@ class SelectParser(ABC):
         fields=self.__get_fields()
         using_key=self.__get_using_key()
         order_by_columns=self.__get_order_by_columns()
-
+        
         return [tables, columns, values, math_operators, logical_operators, fields, using_key, order_by_columns]
     
     def _parser(self) -> None:
@@ -25,7 +25,10 @@ class SelectParser(ABC):
         
         if not "DE" in self._cmd_list:
             raise Exception("Comando de selecionar incorreto! (Faltando palavra-chave 'DE')")
-    
+        
+        if ("JUNTE" in self._cmd_list and not "COM" in self._cmd_list) or ("COM" in self._cmd_list and not "JUNTE" in self._cmd_list):
+            raise Exception("Comando de selecionar incorreto! (Palavra-chave 'JUNTE COM' incorreta)")
+        
     def _get_tables(self) -> List[str]:
         table1_index=self._cmd_list.index("DE")+1
         table1=self._cmd_list[table1_index]
@@ -174,8 +177,6 @@ class SelectParser(ABC):
                     order_by_columns.append(column[0:len(column)-1])
                 else:
                     order_by_columns.append(column)
-            
-            print(order_by_columns)
         
         return []
     
