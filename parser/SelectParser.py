@@ -177,6 +177,8 @@ class SelectParser(ABC):
                     order_by_columns.append(column[0:len(column)-1])
                 else:
                     order_by_columns.append(column)
+            
+            return order_by_columns
         
         return []
     

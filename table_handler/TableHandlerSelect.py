@@ -11,7 +11,7 @@ class TableHandlerSelect(TableHandlerInterface):
         self.__fields=cmd_list[5]
         self.__using_key=cmd_list[6]
         self.__order_by_columns=cmd_list[7]
-
+ 
         super().__init__(cmd_list)
 
     def _tables_exist(self) -> bool:
@@ -94,12 +94,17 @@ class TableHandlerSelect(TableHandlerInterface):
 
     def _execute(self) -> None:
         if self._tables[1] is None:
-            self.__select_registers()
-        
+            registers=self.__select_registers()
         else:
-            self.__inner_join()
+            registers=self.__inner_join()
 
-    def __select_registers(self):
+        if self.__order_by_columns is None:
+            print(registers)
+        else:
+            registers=self.__sort(registers)
+            print(registers)
+
+    def __select_registers(self) -> List:
         with open(self._abs_table_path, "r", newline="") as file:
             csv_reader=csv.DictReader(file)
             
@@ -148,9 +153,10 @@ class TableHandlerSelect(TableHandlerInterface):
                         registers.append(column_value_dict)
 
                 final_condition=True
-        print(registers)
+
+        return registers
                     
-    def __inner_join(self):
+    def __inner_join(self) -> List:
         with open(self._abs_table_path, "r", newline="") as file:
             csv_reader1=csv.DictReader(file)
             file_headers1=csv_reader1.fieldnames
@@ -207,4 +213,8 @@ class TableHandlerSelect(TableHandlerInterface):
                     
                     final_registers.append(column_value_dict)
 
-        print(final_registers)
+        return final_registers
+
+    def __sort(self, registers_list: List) -> List:
+        sorted_registers_list=sorted(registers_list, key=lambda x: tuple(x[key] for key in self.__order_by_columns))
+        return sorted_registers_list
