@@ -57,6 +57,9 @@ class TableHandlerSelect(TableHandlerInterface):
             return True
     
     def __inner_join_fields_exist(self) -> bool:
+        if self.__fields[0]=="*":
+            return True
+        
         with open(self._abs_table_path, "r", newline="") as file:
             csv_reader=csv.reader(file)
             file_headers1=next(csv_reader, None)
@@ -148,4 +151,60 @@ class TableHandlerSelect(TableHandlerInterface):
         print(registers)
                     
     def __inner_join(self):
-        pass
+        with open(self._abs_table_path, "r", newline="") as file:
+            csv_reader1=csv.DictReader(file)
+            file_headers1=csv_reader1.fieldnames
+
+            registers1=[]
+
+            for register in csv_reader1:
+                registers1.append(register)
+
+        with open(self.__abs_table2_path, "r", newline="") as file:
+            csv_reader2=csv.DictReader(file)
+            file_headers2=csv_reader2.fieldnames
+
+            registers2=[]
+
+            for register in csv_reader2:
+                registers2.append(register)
+
+        if (self.__using_key not in file_headers1) or (self.__using_key not in file_headers2):
+            raise Exception(f"Comando de selecionar incorreto! (Chave de comparação {self.__using_key} não existente)")
+
+        if len(registers1)>len(registers2):
+            limit=len(registers2)
+        else:
+            limit=len(registers1)
+
+        final_registers_aux=[]
+
+        for i in range(0, limit):
+            column_value_dict={}
+            
+            register1=registers1[i]
+            register2=registers2[i]
+
+            if register1[self.__using_key]==register2[self.__using_key]:
+                column_value_dict=register1
+
+                for key in register2:
+                    if key!=self.__using_key:
+                        column_value_dict[key]=register2[key]
+
+                final_registers_aux.append(column_value_dict)
+            
+            final_registers=[]
+
+            if self.__fields[0]=="*":
+                final_registers=final_registers_aux
+            else:
+                for index, register in enumerate(final_registers_aux):
+                    column_value_dict={}
+                    
+                    for key in self.__fields:
+                        column_value_dict[key]=final_registers_aux[index][key]
+                    
+                    final_registers.append(column_value_dict)
+
+        print(final_registers)
