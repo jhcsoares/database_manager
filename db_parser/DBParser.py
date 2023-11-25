@@ -14,8 +14,8 @@ class DBParser:
     
     def __parser(self) -> None:
         if self.__cmd_list[1]=="banco":
-            if self.__cmd_list[2]!="DE":
-                raise Exception("Erro no comando de importar! (Palavra-chave 'DE' incorreta)")
+            if self.__cmd_list[2]!="de":
+                raise Exception("Erro no comando de importar! (Palavra-chave 'de' incorreta)")
             if self.__cmd_list[3]!="dados":   
                 raise Exception("Erro no comando de importar! (Palavra-chave 'dados' incorreta)")
 

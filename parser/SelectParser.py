@@ -158,9 +158,15 @@ class SelectParser(ABC):
     
     def __get_using_key(self) -> str:
         if "junte" in self._cmd_list:
-            key_index=self._cmd_list.index("usando")+1
+            if "usando" in self._cmd_list:
+                key_index=self._cmd_list.index("usando")+1
 
-            return self._cmd_list[key_index]
+                return [self._cmd_list[key_index]]
+            
+            else:
+                key1_index=self._cmd_list.index("sob")+1
+                key2_index=self._cmd_list.index("sob")+3
+                return [self._cmd_list[key1_index], self._cmd_list[key2_index]]
 
         return None
     

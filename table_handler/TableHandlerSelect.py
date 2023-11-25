@@ -176,8 +176,20 @@ class TableHandlerSelect(TableHandlerInterface):
             for register in csv_reader2:
                 registers2.append(register)
 
-        if (self.__using_key not in file_headers1) or (self.__using_key not in file_headers2):
-            raise Exception(f"Comando de selecionar incorreto! (Chave de comparação {self.__using_key} não existente)")
+        for using_key in self.__using_key:
+            if (using_key not in file_headers1) and (using_key not in file_headers2):
+                raise Exception(f"Comando de selecionar incorreto! (Chave de comparação {using_key} não existente)")
+        
+        if len(self.__using_key)==1:
+            using_key1=self.__using_key[0]
+            using_key2=self.__using_key[0]
+        else:
+            if self.__using_key[0] in file_headers1:
+                using_key1=self.__using_key[0]
+                using_key2=self.__using_key[1]
+            else:
+                using_key1=self.__using_key[1]
+                using_key2=self.__using_key[0]
 
         final_registers_aux=[]
 
@@ -185,11 +197,11 @@ class TableHandlerSelect(TableHandlerInterface):
             for register2 in registers2:
                 column_value_dict={}
 
-                if register1[self.__using_key]==register2[self.__using_key]:
+                if register1[using_key1]==register2[using_key2]:
                     column_value_dict=register1
 
                     for key in register2:
-                        if key!=self.__using_key:
+                        if key not in self.__using_key:
                             column_value_dict[key]=register2[key]
 
                     final_registers_aux.append(column_value_dict)

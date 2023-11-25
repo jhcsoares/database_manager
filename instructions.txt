@@ -31,10 +31,18 @@ de tabela1
 [onde coluna_x <condição> valor_x <operador lógico> coluna_y <condição> valor_y <operador lógico> ...]
 [ordene por coluna_z, coluna_w, ...]
 
--Inner join:
+-Inner join 1:
 selecione coluna1, coluna2, ...
 de tabela1 
 junte com tabela2
 usando <chave>
+[onde coluna_x <condição> valor_x <operador lógico> coluna_y <condição> valor_y <operador lógico> ...]
+[ordene por coluna_z, coluna_w, ...]
+
+-Inner join 2:
+selecione coluna1, coluna2, ...
+de tabela1 
+junte com tabela2
+sob chave1 = chave2
 [onde coluna_x <condição> valor_x <operador lógico> coluna_y <condição> valor_y <operador lógico> ...]
 [ordene por coluna_z, coluna_w, ...]
