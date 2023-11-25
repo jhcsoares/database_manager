@@ -16,21 +16,22 @@ class TableHandlerSelect(TableHandlerInterface):
 
     def _tables_exist(self) -> bool:
         if self._tables[1] is None:
-            table_path=os.path.join("../database_manager/data/tables", self._tables[0].lower()+".csv")
-            absolute_path1=os.path.abspath(table_path)
-            self._abs_table_path=absolute_path1
+            current_file_path=os.path.abspath(__file__)
+            table_path=os.path.abspath(os.path.join(current_file_path, "../../data/tables/"+self._tables[0].lower()+".csv"))
+            self._abs_table_path=table_path
 
-            return os.path.isfile(absolute_path1)
+            return os.path.isfile(table_path)
 
         else:
-            table_path=os.path.join("../database_manager/data/tables", self._tables[0].lower()+".csv")
-            absolute_path1=os.path.abspath(table_path)
-            self._abs_table_path=absolute_path1
+            current_file_path=os.path.abspath(__file__)
+            table_path=os.path.abspath(os.path.join(current_file_path, "../../data/tables/"+self._tables[0].lower()+".csv"))
+            self._abs_table_path=table_path
 
-            table_path=os.path.join("../database_manager/data/tables", self._tables[1].lower()+".csv")
-            absolute_path2=os.path.abspath(table_path)
-            self.__abs_table2_path=absolute_path2
-            return os.path.isfile(absolute_path1) and os.path.isfile(absolute_path2)
+            current_file_path=os.path.abspath(__file__)
+            table_path=os.path.abspath(os.path.join(current_file_path, "../../data/tables/"+self._tables[1].lower()+".csv"))
+            self.__abs_table2_path=table_path
+            
+            return os.path.isfile(self._abs_table_path) and os.path.isfile(self.__abs_table2_path)
         
     def __fields_exist(self) -> bool:
         if self._tables[1] is None:

@@ -25,10 +25,11 @@ class TableHandlerInterface(ABC):
         pass
 
     def _tables_exist(self) -> bool:
-        table_path=os.path.join("../database_manager/data/tables", self._tables[0].lower()+".csv")
-        absolute_path=os.path.abspath(table_path)
-        self._abs_table_path=absolute_path
-        return os.path.isfile(absolute_path)
+        current_file_path=os.path.abspath(__file__)
+        table_path=os.path.abspath(os.path.join(current_file_path, "../../data/tables/"+self._tables[0].lower()+".csv"))
+        self._abs_table_path=table_path
+
+        return os.path.isfile(table_path)
     
     def _validate(self) -> None:
         if not self._tables_exist():

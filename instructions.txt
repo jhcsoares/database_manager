@@ -1,0 +1,40 @@
+-> Os statement entre [] são opcionais
+
+INSERIR:
+insira em tabela1
+(coluna1, coluna2, ...)
+valores
+(valor1, valor2, ...)
+
+ATUALIZAR:
+atualize tabela1
+configure 
+coluna1 = valor1,
+coluna2 = valor2, ...
+onde [coluna_x <condição> valor_x <operador lógico> coluna_y <condição> valor_y <operador lógico> ...]
+
+APAGAR:
+apague de tabela1
+[onde coluna_x <condição> valor_x <operador lógico> coluna_y <condição> valor_y <operador lógico> ...]
+
+SELECIONAR:
+
+-Seleção comum:
+selecione coluna1, coluna2, ...
+de tabela1 
+[onde coluna_x <condição> valor_x <operador lógico> coluna_y <condição> valor_y <operador lógico> ...]
+[ordene por coluna_z, coluna_w, ...]
+
+-Seleção de todos os campos:
+selecione *
+de tabela1 
+[onde coluna_x <condição> valor_x <operador lógico> coluna_y <condição> valor_y <operador lógico> ...]
+[ordene por coluna_z, coluna_w, ...]
+
+-Inner join:
+selecione coluna1, coluna2, ...
+de tabela1 
+junte com tabela2
+usando <chave>
+[onde coluna_x <condição> valor_x <operador lógico> coluna_y <condição> valor_y <operador lógico> ...]
+[ordene por coluna_z, coluna_w, ...]
