@@ -1,5 +1,6 @@
 import os
 import csv
+from prettytable import PrettyTable 
 
 from table_handler.TableHandlerInterface import TableHandlerInterface
 
@@ -100,10 +101,10 @@ class TableHandlerSelect(TableHandlerInterface):
             registers=self.__inner_join()
 
         if self.__order_by_columns is None:
-            print(registers)
+            self.__print_table(registers)
         else:
             registers=self.__sort(registers)
-            print(registers)
+            self.__print_table(registers)
 
     def __select_registers(self) -> List:
         with open(self._abs_table_path, "r", newline="") as file:
@@ -270,3 +271,13 @@ class TableHandlerSelect(TableHandlerInterface):
     def __sort(self, registers_list: List) -> List:
         sorted_registers_list=sorted(registers_list, key=lambda x: tuple(x[key] for key in self.__order_by_columns))
         return sorted_registers_list
+    
+    def __print_table(self, data: List):
+        table=PrettyTable()
+
+        table.field_names=list(data[0].keys())
+
+        for row in data:
+            table.add_row(list(row.values()))
+
+        print(table)
