@@ -17,18 +17,18 @@ class TableHandlerSelect(TableHandlerInterface):
     def _tables_exist(self) -> bool:
         if self._tables[1] is None:
             current_file_path=os.path.abspath(__file__)
-            table_path=os.path.abspath(os.path.join(current_file_path, "../../data/tables/"+self._tables[0].lower()+".csv"))
+            table_path=os.path.abspath(os.path.join(current_file_path, "../../data/tables/"+self._tables[0]+".csv"))
             self._abs_table_path=table_path
 
             return os.path.isfile(table_path)
 
         else:
             current_file_path=os.path.abspath(__file__)
-            table_path=os.path.abspath(os.path.join(current_file_path, "../../data/tables/"+self._tables[0].lower()+".csv"))
+            table_path=os.path.abspath(os.path.join(current_file_path, "../../data/tables/"+self._tables[0]+".csv"))
             self._abs_table_path=table_path
 
             current_file_path=os.path.abspath(__file__)
-            table_path=os.path.abspath(os.path.join(current_file_path, "../../data/tables/"+self._tables[1].lower()+".csv"))
+            table_path=os.path.abspath(os.path.join(current_file_path, "../../data/tables/"+self._tables[1]+".csv"))
             self.__abs_table2_path=table_path
             
             return os.path.isfile(self._abs_table_path) and os.path.isfile(self.__abs_table2_path)
@@ -49,7 +49,7 @@ class TableHandlerSelect(TableHandlerInterface):
             file_headers=next(csv_reader, None)
             
             for i in range(0, len(file_headers)):
-                file_headers[i]=file_headers[i].upper()
+                file_headers[i]=file_headers[i]
 
             for field in self.__fields:
                 if field not in file_headers:
@@ -66,14 +66,14 @@ class TableHandlerSelect(TableHandlerInterface):
             file_headers1=next(csv_reader, None)
             
             for i in range(0, len(file_headers1)):
-                file_headers1[i]=file_headers1[i].upper()
+                file_headers1[i]=file_headers1[i]
 
         with open(self.__abs_table2_path, "r", newline="") as file:
             csv_reader=csv.reader(file)
             file_headers2=next(csv_reader, None)
             
             for i in range(0, len(file_headers2)):
-                file_headers2[i]=file_headers2[i].upper()
+                file_headers2[i]=file_headers2[i]
         
         file_headers=file_headers1+file_headers2
 
@@ -134,9 +134,9 @@ class TableHandlerSelect(TableHandlerInterface):
                         raise Exception("Erro de operador aritmético!")
 
                     if i!=0 and len(self._logical_operators)>0:
-                        if self._logical_operators[i-1]=="OU":
+                        if self._logical_operators[i-1]=="ou":
                             final_condition=final_condition or condition 
-                        elif self._logical_operators[i-1]=="E":
+                        elif self._logical_operators[i-1]=="e":
                             final_condition=final_condition and condition 
                         else:
                             raise Exception("Erro de operador lógico!")
@@ -179,42 +179,81 @@ class TableHandlerSelect(TableHandlerInterface):
         if (self.__using_key not in file_headers1) or (self.__using_key not in file_headers2):
             raise Exception(f"Comando de selecionar incorreto! (Chave de comparação {self.__using_key} não existente)")
 
-        if len(registers1)>len(registers2):
-            limit=len(registers2)
-        else:
-            limit=len(registers1)
-
         final_registers_aux=[]
 
-        for i in range(0, limit):
-            column_value_dict={}
+        for register1 in registers1:
+            for register2 in registers2:
+                column_value_dict={}
+
+                if register1[self.__using_key]==register2[self.__using_key]:
+                    column_value_dict=register1
+
+                    for key in register2:
+                        if key!=self.__using_key:
+                            column_value_dict[key]=register2[key]
+
+                    final_registers_aux.append(column_value_dict)
+                
+                final_registers=[]
+
+                if self.__fields[0]=="*":
+                    final_registers=final_registers_aux
+                else:
+                    for index, register in enumerate(final_registers_aux):
+                        column_value_dict={}
+                        
+                        for key in self.__fields:
+                            column_value_dict[key]=final_registers_aux[index][key]
+                        
+                        final_registers.append(column_value_dict)
+        
+        final_condition=True
+        registers=[]
+
+        for register in final_registers:
+            for i in range(0, len(self._columns)):
+                column=self._columns[i]
+                value=self._values[i]
+                math_operator=self._math_operators[i]
             
-            register1=registers1[i]
-            register2=registers2[i]
+                if math_operator=="=":
+                    condition=register[column]==value
+                elif math_operator==">":
+                    condition=register[column]>value
+                elif math_operator==">=":
+                    condition=register[column]>=value
+                elif math_operator=="<":
+                    condition=register[column]<value
+                elif math_operator=="<=":
+                    condition=register[column]<=value
+                elif math_operator=="!=":
+                    condition=register[column]!=value
+                else:
+                    raise Exception("Erro de operador aritmético!")
 
-            if register1[self.__using_key]==register2[self.__using_key]:
-                column_value_dict=register1
-
-                for key in register2:
-                    if key!=self.__using_key:
-                        column_value_dict[key]=register2[key]
-
-                final_registers_aux.append(column_value_dict)
-            
-            final_registers=[]
-
-            if self.__fields[0]=="*":
-                final_registers=final_registers_aux
-            else:
-                for index, register in enumerate(final_registers_aux):
+                if i!=0 and len(self._logical_operators)>0:
+                    if self._logical_operators[i-1]=="ou":
+                        final_condition=final_condition or condition 
+                    elif self._logical_operators[i-1]=="e":
+                        final_condition=final_condition and condition 
+                    else:
+                        raise Exception("Erro de operador lógico!")
+                else:
+                    final_condition=condition
+                
+            if final_condition==True:
+                if self.__fields[0]=="*":
+                    registers.append(register)
+                
+                else:
                     column_value_dict={}
-                    
-                    for key in self.__fields:
-                        column_value_dict[key]=final_registers_aux[index][key]
-                    
-                    final_registers.append(column_value_dict)
+                    for field in self.__fields:
+                        column_value_dict[field]=register[field]
+                    registers.append(column_value_dict)
 
-        return final_registers
+            final_condition=True
+        
+        return registers
 
     def __sort(self, registers_list: List) -> List:
         sorted_registers_list=sorted(registers_list, key=lambda x: tuple(x[key] for key in self.__order_by_columns))

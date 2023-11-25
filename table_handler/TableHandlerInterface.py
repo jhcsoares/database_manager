@@ -26,7 +26,7 @@ class TableHandlerInterface(ABC):
 
     def _tables_exist(self) -> bool:
         current_file_path=os.path.abspath(__file__)
-        table_path=os.path.abspath(os.path.join(current_file_path, "../../data/tables/"+self._tables[0].lower()+".csv"))
+        table_path=os.path.abspath(os.path.join(current_file_path, "../../data/tables/"+self._tables[0]+".csv"))
         self._abs_table_path=table_path
 
         return os.path.isfile(table_path)
@@ -44,7 +44,7 @@ class TableHandlerInterface(ABC):
             file_headers=next(csv_reader, None)
             
             for i in range(0, len(file_headers)):
-                file_headers[i]=file_headers[i].upper()
+                file_headers[i]=file_headers[i]
 
             for column in self._columns:
                 if column not in file_headers:

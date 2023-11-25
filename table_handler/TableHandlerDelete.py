@@ -57,9 +57,9 @@ class TableHandlerDelete(TableHandlerInterface):
                         raise Exception("Erro de operador aritmético!")
 
                     if i!=0 and len(self._logical_operators)>0:
-                        if self._logical_operators[i-1]=="OU":
+                        if self._logical_operators[i-1]=="ou":
                             final_condition=final_condition or condition 
-                        elif self._logical_operators[i-1]=="E":
+                        elif self._logical_operators[i-1]=="e":
                             final_condition=final_condition and condition 
                         else:
                             raise Exception("Erro de operador lógico!")

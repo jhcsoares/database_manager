@@ -9,12 +9,12 @@ class DeleteParser(ParserInterface):
         if len(self._cmd_list)<2:
             raise Exception("Comando de deletar incorreto! (Poucas palavras no comando)")
         
-        if self._cmd_list[1]!="DE":
-            raise Exception("Comando de deletar incorreto! (Palavra-chave 'DE' incorreta)")
+        if self._cmd_list[1]!="de":
+            raise Exception("Comando de deletar incorreto! (Palavra-chave 'de' incorreta)")
         
         if len(self._cmd_list)>3:
-            if self._cmd_list[3]!="ONDE":
-                raise Exception("Comando de deletar incorreto! (Faltando palavra-chave 'ONDE')")
+            if self._cmd_list[3]!="onde":
+                raise Exception("Comando de deletar incorreto! (Faltando palavra-chave 'onde')")
 
     def _get_tables(self) -> List[str]:
         return [self._cmd_list[2]]

@@ -22,11 +22,11 @@ class UpdateParser(ParserInterface):
         if len(self._cmd_list)<5:
             raise Exception("Comando de atualizar incorreto! (Poucas palavras no comando)")
        
-        if self._cmd_list[2]!="CONFIGURE":
-            raise Exception("Comando de atualizar incorreto! (Palavra-chave 'CONFIGURE' incorreta)")
+        if self._cmd_list[2]!="configure":
+            raise Exception("Comando de atualizar incorreto! (Palavra-chave 'configure' incorreta)")
         
-        if "ONDE" not in self._cmd_list:
-            raise Exception("Comando de atualizar incorreto! (Faltando palavra-chave 'ONDE')")
+        if "onde" not in self._cmd_list:
+            raise Exception("Comando de atualizar incorreto! (Faltando palavra-chave 'onde')")
 
     def _get_tables(self) -> List[str]:
         return [self._cmd_list[1]]
@@ -34,7 +34,7 @@ class UpdateParser(ParserInterface):
     def _get_columns(self) -> List[str]:
         columns=[]        
 
-        start_value=self._cmd_list.index("ONDE")+1
+        start_value=self._cmd_list.index("onde")+1
 
         for column_index in range(start_value, len(self._cmd_list), 4):
             column=self._cmd_list[column_index]
@@ -46,7 +46,7 @@ class UpdateParser(ParserInterface):
     def _get_values(self) -> List[str]:
         values=[]        
 
-        start_value=self._cmd_list.index("ONDE")+3
+        start_value=self._cmd_list.index("onde")+3
 
         for value_index in range(start_value, len(self._cmd_list), 4):
             value=self._cmd_list[value_index]
@@ -62,7 +62,7 @@ class UpdateParser(ParserInterface):
     def _get_math_operators(self) -> List[str]:
         math_operators=[]        
 
-        start_math_operator=self._cmd_list.index("ONDE")+2
+        start_math_operator=self._cmd_list.index("onde")+2
 
         for math_operator_index in range(start_math_operator, len(self._cmd_list), 4):
             math_operator=self._cmd_list[math_operator_index]
@@ -74,7 +74,7 @@ class UpdateParser(ParserInterface):
     def _get_logical_operators(self) -> List[str]:
         logical_operators=[]        
 
-        start_logical_operator=self._cmd_list.index("ONDE")+4
+        start_logical_operator=self._cmd_list.index("onde")+4
 
         for logical_operators_index in range(start_logical_operator, len(self._cmd_list), 4):
             logical_operator=self._cmd_list[logical_operators_index]
@@ -86,7 +86,7 @@ class UpdateParser(ParserInterface):
     def __get_update_columns(self) -> List[str]:
         update_columns=[]
 
-        update_column_index=self._cmd_list.index("CONFIGURE")+1
+        update_column_index=self._cmd_list.index("configure")+1
 
         stop=False
 
@@ -97,7 +97,7 @@ class UpdateParser(ParserInterface):
 
             update_column_index+=3
 
-            if self._cmd_list[update_column_index]=="ONDE":
+            if self._cmd_list[update_column_index]=="onde":
                 stop=True
 
         return update_columns
@@ -105,7 +105,7 @@ class UpdateParser(ParserInterface):
     def __get_update_values(self) -> List[str]:
         update_values=[]
 
-        update_value_index=self._cmd_list.index("CONFIGURE")+3
+        update_value_index=self._cmd_list.index("configure")+3
 
         stop=False
 

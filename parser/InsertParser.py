@@ -9,11 +9,11 @@ class InsertParser(ParserInterface):
         if len(self._cmd_list)<5:
             raise Exception("Comando de inserir incorreto! (Poucas palavras no comando)")
        
-        if self._cmd_list[1]!="EM":
-            raise Exception("Comando de inserir incorreto! (Palavra-chave 'EM' incorreta)")
+        if self._cmd_list[1]!="em":
+            raise Exception("Comando de inserir incorreto! (Palavra-chave 'em' incorreta)")
         
-        if "VALORES" not in self._cmd_list:
-            raise Exception("Comando de inserir incorreto! (Faltando palavra-chave 'VALORES')")
+        if "valores" not in self._cmd_list:
+            raise Exception("Comando de inserir incorreto! (Faltando palavra-chave 'valores')")
 
         column_index=3
         value_index=len(self._cmd_list)-1
@@ -21,7 +21,7 @@ class InsertParser(ParserInterface):
         stop=False
         
         while not stop:
-            if self._cmd_list[column_index]=="VALORES" or self._cmd_list[value_index]=="VALORES":
+            if self._cmd_list[column_index]=="valores" or self._cmd_list[value_index]=="valores":
                 stop=True
 
             if not stop:
@@ -38,7 +38,7 @@ class InsertParser(ParserInterface):
         columns=[]        
         columns_index=3
 
-        while self._cmd_list[columns_index]!="VALORES":
+        while self._cmd_list[columns_index]!="valores":
             column=self._cmd_list[columns_index]
 
             if not column.startswith("("):
@@ -53,7 +53,7 @@ class InsertParser(ParserInterface):
     
     def _get_values(self) -> List[str]:
         values=[]        
-        values_index=self._cmd_list.index("VALORES")+1
+        values_index=self._cmd_list.index("valores")+1
 
         for i in range(values_index, len(self._cmd_list)):
             value=self._cmd_list[i]

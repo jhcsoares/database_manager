@@ -12,7 +12,7 @@ class DBHandlerInterface(ABC):
                 "host": "localhost",
                 "user": "root",
                 "password": "",
-                "database": cmd_list[1].lower()
+                "database": cmd_list[1]
             }
 
         self._validate()

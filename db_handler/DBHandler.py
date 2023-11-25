@@ -21,7 +21,7 @@ class DBHandler(DBHandlerInterface):
         self._data_base=cmd_list[1]
 
         if self._table:
-            self._table=cmd_list[0].lower()
+            self._table=cmd_list[0]
 
             cursor=self._connection.cursor()
             query=f"select * from {self._table}"
@@ -42,4 +42,4 @@ class DBHandler(DBHandlerInterface):
                 writer.writerows(result)
                     
         if self._data_base:
-            self._data_base=cmd_list[1].lower()
+            self._data_base=cmd_list[1]

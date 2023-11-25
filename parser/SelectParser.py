@@ -23,18 +23,18 @@ class SelectParser(ABC):
         if len(self._cmd_list)<4:
             raise Exception("Comando de selecionar incorreto! (Poucas palavras no comando)")
         
-        if not "DE" in self._cmd_list:
-            raise Exception("Comando de selecionar incorreto! (Faltando palavra-chave 'DE')")
+        if not "de" in self._cmd_list:
+            raise Exception("Comando de selecionar incorreto! (Faltando palavra-chave 'de')")
         
-        if ("JUNTE" in self._cmd_list and not "COM" in self._cmd_list) or ("COM" in self._cmd_list and not "JUNTE" in self._cmd_list):
-            raise Exception("Comando de selecionar incorreto! (Palavra-chave 'JUNTE COM' incorreta)")
+        if ("junte" in self._cmd_list and not "com" in self._cmd_list) or ("com" in self._cmd_list and not "junte" in self._cmd_list):
+            raise Exception("Comando de selecionar incorreto! (Palavra-chave 'junte com' incorreta)")
         
     def _get_tables(self) -> List[str]:
-        table1_index=self._cmd_list.index("DE")+1
+        table1_index=self._cmd_list.index("de")+1
         table1=self._cmd_list[table1_index]
 
-        if "COM" in self._cmd_list:
-            table2_index=self._cmd_list.index("COM")+1
+        if "com" in self._cmd_list:
+            table2_index=self._cmd_list.index("com")+1
             table2=self._cmd_list[table2_index]
         else:
             table2=None
@@ -42,15 +42,15 @@ class SelectParser(ABC):
         return [table1, table2]
     
     def _get_columns(self) -> List[str]:
-        if "ONDE" in self._cmd_list:
+        if "onde" in self._cmd_list:
             columns=[]        
 
-            start_value=self._cmd_list.index("ONDE")+1
+            start_value=self._cmd_list.index("onde")+1
 
             for column_index in range(start_value, len(self._cmd_list), 4):
                 column=self._cmd_list[column_index]
 
-                if column!="POR":
+                if column!="por":
                     columns.append(column)
             
             return columns
@@ -59,16 +59,16 @@ class SelectParser(ABC):
             return []
 
     def _get_values(self) -> List[str]:
-        if "ONDE" in self._cmd_list:
+        if "onde" in self._cmd_list:
             values=[]        
 
-            start_value=self._cmd_list.index("ONDE")+3
+            start_value=self._cmd_list.index("onde")+3
 
             stop=False
 
             for value_index in range(start_value, len(self._cmd_list), 4):
                 if not stop:
-                    if ("ORDENE" in self._cmd_list) and (self._cmd_list[value_index+1]=="ORDENE"):                
+                    if ("ordene" in self._cmd_list) and (self._cmd_list[value_index+1]=="ordene"):                
                         value=self._cmd_list[value_index]
                         values.append(value)
                         stop=True
@@ -83,16 +83,16 @@ class SelectParser(ABC):
             return []
 
     def _get_math_operators(self) -> List[str]:
-        if "ONDE" in self._cmd_list:
+        if "onde" in self._cmd_list:
             math_operators=[]        
 
-            start_math_operator=self._cmd_list.index("ONDE")+2
+            start_math_operator=self._cmd_list.index("onde")+2
 
             stop=False
 
             for math_operator_index in range(start_math_operator, len(self._cmd_list), 4):
                 if not stop:
-                    if ("ORDENE" in self._cmd_list) and (self._cmd_list[math_operator_index+2]=="ORDENE"):                
+                    if ("ordene" in self._cmd_list) and (self._cmd_list[math_operator_index+2]=="ordene"):                
                         math_operator=self._cmd_list[math_operator_index]
                         math_operators.append(math_operator)
                         stop=True
@@ -107,18 +107,18 @@ class SelectParser(ABC):
             return []
 
     def _get_logical_operators(self) -> List[str]:
-        if "ONDE" in self._cmd_list:
+        if "onde" in self._cmd_list:
             logical_operators=[]        
 
-            start_logical_operator=self._cmd_list.index("ONDE")+4
+            start_logical_operator=self._cmd_list.index("onde")+4
 
-            if (start_logical_operator<len(self._cmd_list)) and (self._cmd_list[start_logical_operator]!="ORDENE"):
+            if (start_logical_operator<len(self._cmd_list)) and (self._cmd_list[start_logical_operator]!="ordene"):
 
                 stop=False
 
                 for logical_operator_index in range(start_logical_operator, len(self._cmd_list), 4):
                     if not stop:
-                        if ("ORDENE" in self._cmd_list) and (self._cmd_list[logical_operator_index+4]=="ORDENE"):                
+                        if ("ordene" in self._cmd_list) and (self._cmd_list[logical_operator_index+4]=="ordene"):                
                             logical_operator=self._cmd_list[logical_operator_index]
                             logical_operators.append(logical_operator)
                             stop=True
@@ -151,24 +151,24 @@ class SelectParser(ABC):
 
             field_index+=1
 
-            if self._cmd_list[field_index]=="DE":
+            if self._cmd_list[field_index]=="de":
                 stop=True
 
         return fields
     
     def __get_using_key(self) -> str:
-        if "JUNTE" in self._cmd_list:
-            key_index=self._cmd_list.index("USANDO")+1
+        if "junte" in self._cmd_list:
+            key_index=self._cmd_list.index("usando")+1
 
             return self._cmd_list[key_index]
 
         return None
     
     def __get_order_by_columns(self) -> List[str]:
-        if "ORDENE" in self._cmd_list:
+        if "ordene" in self._cmd_list:
             order_by_columns=[]
 
-            start_index=self._cmd_list.index("POR")+1
+            start_index=self._cmd_list.index("por")+1
 
             for index in range(start_index, len(self._cmd_list)):
                 column=self._cmd_list[index]
