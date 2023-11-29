@@ -17,7 +17,6 @@ class Main:
         self.__command=None
         self.__cmd_list=None
         self.__db_handler=None
-        self.__created_tables=[] ############
         self.__execute()
     
     def __execute(self) -> None:
@@ -71,7 +70,114 @@ class Main:
                 print(error.args[0])
     
     def __parse(self) -> List[str]:
-        return self.__command.split(" ") 
-    
+        command_list=self.__command.split(" ") 
+        
+        if "insira" in command_list:
+            index=command_list.index("valores")+1
+            
+            values=[]
+            pick_last_value=False
+            for i in range(index, len(command_list)):
+                if not "," in command_list[i]:
+                    if pick_last_value:
+                        append_value=command_list[i-1]+" "+command_list[i]
+                        values.append(append_value)
+                    elif not ")" in command_list[i]:
+                        pick_last_value=True
+                    else:
+                        values.append(command_list[i])
+                elif pick_last_value:
+                    append_value=command_list[i-1]+" "+command_list[i]
+                    values.append(append_value)
+                    pick_last_value=False
+                else:
+                    values.append(command_list[i])
+                    pick_last_value=False
+            
+            index=command_list.index("valores")
+            command_list=command_list[0:index+1]+values
+            return command_list
+
+        elif "atualize" in command_list:
+
+            index=command_list.index("configure")+3
+            
+            stop=False
+
+            while not stop:
+                if index+1<len(command_list):
+                    if command_list[index+1]!="onde":
+                        if "," not in command_list[index]:
+                            value=command_list[index]+" "+command_list[index+1]
+                            command_list[index]=value
+                            del command_list[index+1]
+                        index+=3
+
+                        if index>=len(command_list) or command_list.index("onde")<index:
+                            stop=True   
+
+            if "onde" in command_list:
+                index=command_list.index("onde")+3
+                
+                stop=False
+
+                while not stop:
+                    if index+1<len(command_list):
+                        if command_list[index+1]!="e" and command_list[index+1]!="ou":
+                            value=command_list[index]+" "+command_list[index+1]
+                            command_list[index]=value
+                            del command_list[index+1]
+                               
+                    index+=4
+                    if index>=len(command_list):
+                        stop=True 
+
+            return command_list
+        
+        elif "apague" in command_list:   
+            if "onde" in command_list:
+                index=command_list.index("onde")+3
+                
+                stop=False
+
+                while not stop:
+                    if index+1<len(command_list):
+                        if command_list[index+1]!="e" and command_list[index+1]!="ou":
+                            value=command_list[index]+" "+command_list[index+1]
+                            command_list[index]=value
+                            del command_list[index+1]
+                               
+                    index+=4
+                    if index>=len(command_list):
+                        stop=True 
+
+            return command_list
+        
+        elif "selecione" in command_list:   
+            if "onde" in command_list:
+                index=command_list.index("onde")+3
+                
+                stop=False
+
+                while not stop:
+                    if index+1<len(command_list):
+                        if command_list[index+1]!="e" and command_list[index+1]!="ou":
+                            value=command_list[index]+" "+command_list[index+1]
+                            command_list[index]=value
+                            del command_list[index+1]
+                               
+                    index+=4
+                    if index>=len(command_list):
+                        stop=True 
+                    
+                    if "ordene" in command_list:
+                        if index>=command_list.index("ordene"):
+                            stop=True 
+
+            return command_list
+        
+        return command_list
+
 if __name__=="__main__":
     main=Main()
+    

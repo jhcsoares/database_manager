@@ -1,5 +1,7 @@
 -> Os statement entre [] são opcionais
 
+insira em tabel1 (col1, col2, col3) valores (comp sci, joao u, teste)
+
 INSERIR:
 insira em tabela1
 (coluna1, coluna2, ...)

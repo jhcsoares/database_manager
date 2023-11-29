@@ -1,5 +1,5 @@
 ID,name,dept_name,tot_cred
-00128,zhang,Comp. Sci.,102
+123,jose,Comp. Sci.,102
 12345,Shankar,Comp. Sci.,32
 19991,Brandt,History,80
 23121,Chavez,Finance,110
@@ -12,3 +12,4 @@ ID,name,dept_name,tot_cred
 76653,Aoi,Elec. Eng.,60
 98765,Bourikas,Elec. Eng.,98
 98988,Tanaka,Biology,120
+,,Comp. Sci.,

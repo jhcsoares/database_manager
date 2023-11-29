@@ -11,3 +11,8 @@ ID,name,dept_name,salary
 76766,Crick,Biology,72000.00
 83821,Brandt,Comp. Sci.,92000.00
 98345,Kim,Elec. Eng.,80000.00
+123,,Comp. Sci.,
+Comp. Sci.,,213,
+,,Comp. Sci.,
+123,jjose,Comp. Sci.,1200
+1111,,Comp. Sci.,
