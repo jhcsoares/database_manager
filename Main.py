@@ -1,4 +1,5 @@
 from typing import List
+import os
 
 from parser.DeleteParser import DeleteParser
 from parser.InsertParser import InsertParser
@@ -60,6 +61,9 @@ class Main:
                     else:
                         self.__db_handler._execute(parsed_cmd_list)
 
+                elif self.__cmd_list[0]=="limpar":
+                    os.system('cls' if os.name == 'nt' else 'clear')
+
                 elif self.__cmd_list[0]=="sair":
                     break
 
@@ -111,10 +115,10 @@ class Main:
                             value=command_list[index]+" "+command_list[index+1]
                             command_list[index]=value
                             del command_list[index+1]
-                        index+=3
-
-                        if index>=len(command_list) or command_list.index("onde")<index:
-                            stop=True   
+                        
+                index+=3
+                if index>=len(command_list) or command_list.index("onde")<index:
+                    stop=True   
 
             if "onde" in command_list:
                 index=command_list.index("onde")+3
