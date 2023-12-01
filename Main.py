@@ -21,7 +21,8 @@ class Main:
         self.__execute()
     
     def __execute(self) -> None:
-        while True:
+        stop=False
+        while not stop:
             try:
                 command=str(input("Digite seu comando: "))
                 self.__command=command
@@ -65,7 +66,7 @@ class Main:
                     os.system('cls' if os.name == 'nt' else 'clear')
 
                 elif self.__cmd_list[0]=="sair":
-                    break
+                    stop=True
 
                 else:
                     raise Exception("Comando principal não encontrado!")
