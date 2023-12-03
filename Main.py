@@ -166,7 +166,7 @@ class Main:
 
                 while not stop:
                     if index+1<len(command_list):
-                        if command_list[index+1]!="e" and command_list[index+1]!="ou":
+                        if command_list[index+1]!="e" and command_list[index+1]!="ou" and command_list[index+1]!="ordene":
                             value=command_list[index]+" "+command_list[index+1]
                             command_list[index]=value
                             del command_list[index+1]

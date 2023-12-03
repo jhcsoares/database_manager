@@ -100,7 +100,7 @@ class TableHandlerSelect(TableHandlerInterface):
         else:
             registers=self.__inner_join()
 
-        if self.__order_by_columns is None:
+        if self.__order_by_columns is None or len(self.__order_by_columns)==0:
             self.__print_table(registers)
         else:
             registers=self.__sort(registers)
@@ -196,34 +196,34 @@ class TableHandlerSelect(TableHandlerInterface):
 
         for register1 in registers1:
             for register2 in registers2:
-                column_value_dict={}
+                column_value_dict_a={}
 
                 if register1[using_key1]==register2[using_key2]:
-                    column_value_dict=register1
+                    column_value_dict_a=dict(register1)
 
                     for key in register2:
-                        if key not in self.__using_key:
-                            column_value_dict[key]=register2[key]
+                        if key not in using_key2:
+                            column_value_dict_a[key]=register2[key]
 
-                    final_registers_aux.append(column_value_dict)
+                    final_registers_aux.append(column_value_dict_a)
                 
-                final_registers=[]
+                # final_registers=[]
 
-                if self.__fields[0]=="*":
-                    final_registers=final_registers_aux
-                else:
-                    for index, register in enumerate(final_registers_aux):
-                        column_value_dict={}
+                # if self.__fields[0]=="*":
+                #     final_registers=final_registers_aux
+                # else:
+                #     for index, register in enumerate(final_registers_aux):
+                #         column_value_dict={}
                         
-                        for key in self.__fields:
-                            column_value_dict[key]=final_registers_aux[index][key]
+                #         for key in self.__fields:
+                #             column_value_dict[key]=final_registers_aux[index][key]
                         
-                        final_registers.append(column_value_dict)
+                #         final_registers.append(column_value_dict)
         
         final_condition=True
         registers=[]
 
-        for register in final_registers:
+        for register in final_registers_aux:
             for i in range(0, len(self._columns)):
                 column=self._columns[i]
                 value=self._values[i]
