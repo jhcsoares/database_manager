@@ -113,10 +113,105 @@ class UpdateParser(ParserInterface):
             update_value=self._cmd_list[update_value_index]
 
             if "," in update_value:
-                update_values.append(update_value[0:len(update_value)-1])
+                update_value=update_value[0:len(update_value)-1]
+
+                components=[]
+                    
+                if "*" in update_value:
+                    components=update_value.split("*")
+                    
+                    if components[0].isalpha():
+                        column=components[0]
+                    else:
+                        column=components[1]
+
+                    if column!=self._cmd_list[update_value_index-2]:
+                        raise Exception("Valores de atualização incorretos")
+                
+                elif "/" in update_value:
+                    components=update_value.split("/")
+                    
+                    if components[0].isalpha():
+                        column=components[0]
+                    else:
+                        column=components[1]
+
+                    if column!=self._cmd_list[update_value_index-2]:
+                        raise Exception("Valores de atualização incorretos")
+                
+                elif "+" in update_value:
+                    components=update_value.split("+")
+                    
+                    if components[0].isalpha():
+                        column=components[0]
+                    else:
+                        column=components[1]
+
+                    if column!=self._cmd_list[update_value_index-2]:
+                        raise Exception("Valores de atualização incorretos")
+                
+                elif "-" in update_value:
+                    components=update_value.split("-")
+                    
+                    if components[0].isalpha():
+                        column=components[0]
+                    else:
+                        column=components[1]
+
+                    if column!=self._cmd_list[update_value_index-2]:
+                        raise Exception("Valores de atualização incorretos")
+                    
+                
+                update_values.append(update_value)
                 update_value_index+=3
 
             else:
+                components=[]
+                    
+                if "*" in update_value:
+                    components=update_value.split("*")
+                    
+                    if components[0].isalpha():
+                        column=components[0]
+                    else:
+                        column=components[1]
+
+                    if column!=self._cmd_list[update_value_index-2]:
+                        raise Exception("Valores de atualização incorretos")
+                
+                elif "/" in update_value:
+                    components=update_value.split("/")
+                    
+                    if components[0].isalpha():
+                        column=components[0]
+                    else:
+                        column=components[1]
+
+                    if column!=self._cmd_list[update_value_index-2]:
+                        raise Exception("Valores de atualização incorretos")
+                
+                elif "+" in update_value:
+                    components=update_value.split("+")
+                    
+                    if components[0].isalpha():
+                        column=components[0]
+                    else:
+                        column=components[1]
+
+                    if column!=self._cmd_list[update_value_index-2]:
+                        raise Exception("Valores de atualização incorretos")
+                
+                elif "-" in update_value:
+                    components=update_value.split("-")
+                    
+                    if components[0].isalpha():
+                        column=components[0]
+                    else:
+                        column=components[1]
+
+                    if column!=self._cmd_list[update_value_index-2]:
+                        raise Exception("Valores de atualização incorretos")
+                    
                 update_values.append(update_value)
                 stop=True
 
