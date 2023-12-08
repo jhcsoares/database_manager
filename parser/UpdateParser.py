@@ -120,7 +120,7 @@ class UpdateParser(ParserInterface):
                 if "*" in update_value:
                     components=update_value.split("*")
                     
-                    if components[0].isalpha():
+                    if components[1].isdecimal():
                         column=components[0]
                     else:
                         column=components[1]
@@ -131,7 +131,7 @@ class UpdateParser(ParserInterface):
                 elif "/" in update_value:
                     components=update_value.split("/")
                     
-                    if components[0].isalpha():
+                    if components[1].isdecimal():
                         column=components[0]
                     else:
                         column=components[1]
@@ -142,7 +142,7 @@ class UpdateParser(ParserInterface):
                 elif "+" in update_value:
                     components=update_value.split("+")
                     
-                    if components[0].isalpha():
+                    if components[1].isdecimal():
                         column=components[0]
                     else:
                         column=components[1]
@@ -153,7 +153,7 @@ class UpdateParser(ParserInterface):
                 elif "-" in update_value:
                     components=update_value.split("-")
                     
-                    if components[0].isalpha():
+                    if components[1].isdecimal():
                         column=components[0]
                     else:
                         column=components[1]
@@ -171,7 +171,7 @@ class UpdateParser(ParserInterface):
                 if "*" in update_value:
                     components=update_value.split("*")
                     
-                    if components[0].isalpha():
+                    if components[1].isdecimal():
                         column=components[0]
                     else:
                         column=components[1]
@@ -182,7 +182,7 @@ class UpdateParser(ParserInterface):
                 elif "/" in update_value:
                     components=update_value.split("/")
                     
-                    if components[0].isalpha():
+                    if components[1].isdecimal():
                         column=components[0]
                     else:
                         column=components[1]
@@ -193,7 +193,7 @@ class UpdateParser(ParserInterface):
                 elif "+" in update_value:
                     components=update_value.split("+")
                     
-                    if components[0].isalpha():
+                    if components[1].isdecimal():
                         column=components[0]
                     else:
                         column=components[1]
@@ -204,7 +204,7 @@ class UpdateParser(ParserInterface):
                 elif "-" in update_value:
                     components=update_value.split("-")
                     
-                    if components[0].isalpha():
+                    if components[1].isdecimal():
                         column=components[0]
                     else:
                         column=components[1]

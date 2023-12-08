@@ -31,7 +31,7 @@ class TableHandlerUpdate(TableHandlerInterface):
                     if "*" in self.__update_values[index]:
                         components=self.__update_values[index].split("*")
                         
-                        if components[0].isalpha():
+                        if components[1].isdecimal():
                             value=components[1]
                         else:
                             value=components[0]
@@ -41,7 +41,7 @@ class TableHandlerUpdate(TableHandlerInterface):
                     elif "/" in self.__update_values[index]:
                         components=self.__update_values[index].split("/")
                         
-                        if components[0].isalpha():
+                        if components[1].isdecimal():
                             value=components[1]
                             register[update_column]=float(register[update_column])/float(value)
                         else:
@@ -51,7 +51,7 @@ class TableHandlerUpdate(TableHandlerInterface):
                     elif "+" in self.__update_values[index]:
                         components=self.__update_values[index].split("+")
                         
-                        if components[0].isalpha():
+                        if components[1].isdecimal():
                             value=components[1]
                         else:
                             value=components[0]
@@ -61,7 +61,7 @@ class TableHandlerUpdate(TableHandlerInterface):
                     elif "-" in self.__update_values[index]:
                         components=self.__update_values[index].split("-")
                         
-                        if components[0].isalpha():
+                        if components[1].isdecimal():
                             value=components[1]
                             register[update_column]=float(register[update_column])-float(value)
                         else:
@@ -119,13 +119,13 @@ class TableHandlerUpdate(TableHandlerInterface):
 
                 if final_condition==True:
                     for index, update_column in enumerate(self.__update_columns):
-                        
+
                         components=[]
                     
                         if "*" in self.__update_values[index]:
                             components=self.__update_values[index].split("*")
                             
-                            if components[0].isalpha():
+                            if components[1].isdecimal():
                                 value=components[1]
                             else:
                                 value=components[0]
@@ -135,7 +135,7 @@ class TableHandlerUpdate(TableHandlerInterface):
                         elif "/" in self.__update_values[index]:
                             components=self.__update_values[index].split("/")
                             
-                            if components[0].isalpha():
+                            if components[1].isdecimal():
                                 value=components[1]
                                 register[update_column]=float(register[update_column])/float(value)
                             else:
@@ -145,7 +145,7 @@ class TableHandlerUpdate(TableHandlerInterface):
                         elif "+" in self.__update_values[index]:
                             components=self.__update_values[index].split("+")
                             
-                            if components[0].isalpha():
+                            if components[1].isdecimal():
                                 value=components[1]
                             else:
                                 value=components[0]
@@ -155,7 +155,7 @@ class TableHandlerUpdate(TableHandlerInterface):
                         elif "-" in self.__update_values[index]:
                             components=self.__update_values[index].split("-")
                             
-                            if components[0].isalpha():
+                            if components[1].isdecimal():
                                 value=components[1]
                                 register[update_column]=float(register[update_column])-float(value)
                             else:
