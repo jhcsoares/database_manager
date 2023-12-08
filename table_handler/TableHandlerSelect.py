@@ -122,15 +122,15 @@ class TableHandlerSelect(TableHandlerInterface):
                     if math_operator=="=":
                         condition=register[column]==value
                     elif math_operator==">":
-                        condition=register[column]>value
+                        condition=float(register[column])>float(value)
                     elif math_operator==">=":
-                        condition=register[column]>=value
+                        condition=float(register[column])>=float(value)
                     elif math_operator=="<":
-                        condition=register[column]<value
+                        condition=float(register[column])<float(value)
                     elif math_operator=="<=":
-                        condition=register[column]<=value
+                        condition=float(register[column])<=float(value)
                     elif math_operator=="!=":
-                        condition=register[column]!=value
+                        condition=float(register[column])!=value
                     else:
                         raise Exception("Erro de operador aritmético!")
 
@@ -273,11 +273,12 @@ class TableHandlerSelect(TableHandlerInterface):
         return sorted_registers_list
     
     def __print_table(self, data: List):
-        table=PrettyTable()
+        if len(data)>0:
+            table=PrettyTable()
 
-        table.field_names=list(data[0].keys())
+            table.field_names=list(data[0].keys())
 
-        for row in data:
-            table.add_row(list(row.values()))
+            for row in data:
+                table.add_row(list(row.values()))
 
-        print(table)
+            print(table)
